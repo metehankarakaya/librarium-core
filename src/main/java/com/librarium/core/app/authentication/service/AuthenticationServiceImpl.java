@@ -3,6 +3,8 @@ package com.librarium.core.app.authentication.service;
 import com.librarium.core.app.common.model.LoginDTO;
 import com.librarium.core.app.user.model.User;
 import com.librarium.core.app.user.model.UserDTO;
+import com.librarium.core.app.user.model.UserDTOToUserMapper;
+import com.librarium.core.app.user.model.UserToUserDTOMapper;
 import com.librarium.core.app.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -15,11 +17,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Base64;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationProvider, AuthenticationService {
+
+    private final UserToUserDTOMapper userToUserDTOMapper = UserToUserDTOMapper.INSTANCE;
+
+    private final UserDTOToUserMapper userDTOToUserMapper = UserDTOToUserMapper.INSTANCE;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -61,11 +68,31 @@ public class AuthenticationServiceImpl implements AuthenticationProvider, Authen
 
     @Override
     public Boolean register(UserDTO userDTO) {
-        return null;
+        User foundUser = userRepository.findByUsername(userDTO.getUsername());
+        if (foundUser == null) {
+            User user = userDTOToUserMapper.map(userDTO);
+            user.setToken(createToken(userDTO.getUsername(), userDTO.getPassword()));
+
+            user.setCreatedDate(LocalDateTime.now());
+
+            String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
+            user.setPassword(encodedPassword);
+
+            user.setIsBlocked(Boolean.FALSE);
+            userRepository.save(user);
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
     }
 
     @Override
     public UserDTO login(LoginDTO loginDTO) {
+        User user = userRepository.findByUsername(loginDTO.getUsername());
+        if (user != null && !(user.getIsBlocked())) {
+            if (passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
+                return userToUserDTOMapper.map(user);
+            }
+        }
         return null;
     }
 
