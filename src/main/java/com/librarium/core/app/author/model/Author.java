@@ -1,6 +1,5 @@
 package com.librarium.core.app.author.model;
 
-import com.librarium.core.app.book.model.Book;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -35,5 +34,5 @@ public class Author {
     private LocalDateTime deathDate;
 
     @Field
-    private List<Book> books;
+    private List<String> books; //id list
 }

@@ -18,7 +18,6 @@ public class Book {
     @Field
     private String title;
 
-
     @Field
     private String description;
 
