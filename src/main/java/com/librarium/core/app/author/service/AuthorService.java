@@ -9,6 +9,8 @@ import java.util.List;
 @Service
 public interface AuthorService extends BaseService {
 
+    Boolean addAuthor(AuthorDTO authorDTO);
+
     List<AuthorDTO> findAllAuthors();
 
 }

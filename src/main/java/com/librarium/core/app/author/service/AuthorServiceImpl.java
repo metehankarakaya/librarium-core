@@ -1,5 +1,6 @@
 package com.librarium.core.app.author.service;
 
+import com.librarium.core.app.author.model.Author;
 import com.librarium.core.app.author.model.AuthorDTO;
 import com.librarium.core.app.author.model.AuthorDTOToAuthorMapper;
 import com.librarium.core.app.author.model.AuthorToAuthorDTOMapper;
@@ -38,6 +39,16 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public List<AuthorDTO> findAllAuthors() {
         return authorRepository.findAll().stream().map(authorToAuthorDTOMapper::map).collect(Collectors.toList());
+    }
+
+    @Override
+    public Boolean addAuthor(AuthorDTO authorDTO) {
+        Author author = authorDTOToAuthorMapper.map(authorDTO);
+        authorRepository.save(author);
+        if (authorRepository.findById(author.getId()).isPresent()) {
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
     }
 
 }
