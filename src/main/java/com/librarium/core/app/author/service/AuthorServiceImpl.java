@@ -1,6 +1,6 @@
 package com.librarium.core.app.author.service;
 
-import com.librarium.core.app.common.service.BaseService;
+import com.librarium.core.app.common.service.BaseServiceImpl;
 import com.librarium.core.app.user.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class AuthorServiceImpl implements AuthorService {
 
-    private final BaseService baseService;
+    private final BaseServiceImpl baseService;
 
     @Override
     public User getCurrentUser() {
