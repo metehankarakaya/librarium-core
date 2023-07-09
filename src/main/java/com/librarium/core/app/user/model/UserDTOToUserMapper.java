@@ -4,7 +4,7 @@ import com.librarium.core.app.common.mapper.BaseMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface UserDTOToUserMapper extends BaseMapper<UserDTO, User> {
 
     UserDTOToUserMapper INSTANCE = Mappers.getMapper(UserDTOToUserMapper.class);
