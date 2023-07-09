@@ -1,6 +1,5 @@
 package com.librarium.core.app.author.model;
 
-import com.librarium.core.app.book.model.Book;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -23,6 +22,6 @@ public class AuthorDTO {
 
     private LocalDateTime deathDate;
 
-    private List<Book> books;
+    private List<String> books; //id list
 
 }
