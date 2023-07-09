@@ -1,18 +1,18 @@
 package com.librarium.core.app.quote.model;
 
-import com.librarium.core.app.user.model.User;
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.librarium.core.app.user.model.UserDTO;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
-@Document
+@Data
 public class QuoteDTO {
 
     private String id;
 
     private String content;
 
-    private User user;
+    private UserDTO user;
 
     private Integer likeCount;
 
