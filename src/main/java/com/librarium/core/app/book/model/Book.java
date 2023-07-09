@@ -3,6 +3,7 @@ package com.librarium.core.app.book.model;
 import com.librarium.core.app.author.model.Author;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -33,6 +34,7 @@ public class Book {
     @Field
     private byte[] coverImage;
 
+    @DBRef
     @Field
     private Author author;
 

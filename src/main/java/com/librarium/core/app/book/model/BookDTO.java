@@ -1,6 +1,6 @@
 package com.librarium.core.app.book.model;
 
-import com.librarium.core.app.author.model.AuthorDTO;
+import com.librarium.core.app.author.model.Author;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -22,7 +22,7 @@ public class BookDTO {
 
     private byte[] coverImage;
 
-    private AuthorDTO author;
+    private Author author;
 
     private LocalDateTime publishDate;
 
