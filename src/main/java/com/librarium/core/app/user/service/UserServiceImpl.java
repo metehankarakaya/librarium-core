@@ -17,9 +17,9 @@ public class UserServiceImpl implements UserService {
 
     private final BaseServiceImpl baseService;
 
-    private final UserToUserDTOMapper userToUserDTOMapper = UserToUserDTOMapper.INSTANCE;
+    private final UserToUserDTOMapper userToUserDTOMapper;
 
-    private final UserDTOToUserMapper userDTOToUserMapper = UserDTOToUserMapper.INSTANCE;
+    private final UserDTOToUserMapper userDTOToUserMapper;
 
     @Override
     public User getCurrentUser() {
