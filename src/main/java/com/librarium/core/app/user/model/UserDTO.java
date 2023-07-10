@@ -36,6 +36,8 @@ public class UserDTO {
 
     private List<String> addedBooks;
 
+    private List<String> quotes;
+
     private LocalDateTime birthDate;
 
     private LocalDateTime createdDate;

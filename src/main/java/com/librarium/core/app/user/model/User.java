@@ -55,6 +55,9 @@ public class User {
     private List<String> addedBooks; //id list
 
     @Field
+    private List<String> quotes; //id list
+
+    @Field
     private LocalDateTime birthDate;
 
     @Field
