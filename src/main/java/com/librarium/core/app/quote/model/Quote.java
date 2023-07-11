@@ -1,6 +1,6 @@
 package com.librarium.core.app.quote.model;
 
-import com.librarium.core.app.user.model.User;
+import com.librarium.core.app.user.model.UserDTO;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -19,7 +19,7 @@ public class Quote {
     private String content;
 
     @Field
-    private User user;
+    private UserDTO user;
 
     @Field
     private Integer likeCount;

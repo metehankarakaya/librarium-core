@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,7 +48,7 @@ public class QuoteServiceImpl implements QuoteService {
         User user = getCurrentUser();
 
         Quote quote = quoteDTOToQuoteMapper.map(quoteDTO);
-        quote.setUser(user);
+        quote.setUser(userToUserDTOMapper.map(user));
         quote.setLikeCount(0);
         quote.setDislikeCount(0);
         quote.setCreatedDate(getNow());
@@ -64,4 +65,25 @@ public class QuoteServiceImpl implements QuoteService {
         return quoteRepository.findAll().stream().map(quoteToQuoteDTOMapper::map).collect(Collectors.toList());
     }
 
+    @Override
+    public Boolean likeQuote(String quoteId) {
+        Optional<Quote> optional = quoteRepository.findById(quoteId);
+        if (optional.isPresent()) {
+            optional.get().setLikeCount(optional.get().getLikeCount() + 1);
+            quoteRepository.save(optional.get());
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
+    }
+
+    @Override
+    public Boolean dislikeQuote(String quoteId) {
+        Optional<Quote> optional = quoteRepository.findById(quoteId);
+        if (optional.isPresent()) {
+            optional.get().setDislikeCount(optional.get().getDislikeCount() + 1);
+            quoteRepository.save(optional.get());
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
+    }
 }

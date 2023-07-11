@@ -13,4 +13,8 @@ public interface QuoteService extends BaseService {
 
     List<QuoteDTO> findAllQuotes();
 
+    Boolean likeQuote(String quoteId);
+
+    Boolean dislikeQuote(String quoteId);
+
 }
