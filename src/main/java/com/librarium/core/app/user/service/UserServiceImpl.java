@@ -1,6 +1,7 @@
 package com.librarium.core.app.user.service;
 
 import com.librarium.core.app.common.model.EditAboutMeDTO;
+import com.librarium.core.app.common.model.OtherUserDTO;
 import com.librarium.core.app.common.service.BaseServiceImpl;
 import com.librarium.core.app.user.model.User;
 import com.librarium.core.app.user.model.UserDTO;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Base64;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -52,5 +54,33 @@ public class UserServiceImpl implements UserService {
         user.setAboutMe(editAboutMeDTO.getAboutMe());
         userRepository.save(user);
         return Boolean.TRUE;
+    }
+
+    @Override
+    public OtherUserDTO findOtherUserDetail(String otherUserId) {
+        Optional<User> optional = userRepository.findById(otherUserId);
+        if (optional.isPresent()) {
+            OtherUserDTO otherUserDTO = new OtherUserDTO();
+
+            otherUserDTO.setId(optional.get().getId());
+            otherUserDTO.setUsername(optional.get().getUsername());
+            otherUserDTO.setFirstName(optional.get().getFirstName());
+            otherUserDTO.setLastName(optional.get().getLastName());
+            otherUserDTO.setGender(optional.get().getGender());
+            otherUserDTO.setAboutMe(optional.get().getAboutMe());
+            otherUserDTO.setAvatar(optional.get().getAvatar());
+
+            otherUserDTO.setFollowings(optional.get().getFollowings());
+            otherUserDTO.setFollowers(optional.get().getFollowers());
+            otherUserDTO.setFavorites(optional.get().getFavorites());
+            otherUserDTO.setAddedBooks(optional.get().getAddedBooks());
+            otherUserDTO.setQuotes(optional.get().getQuotes());
+
+            otherUserDTO.setBlockReason(optional.get().getBlockReason());
+            otherUserDTO.setIsBlocked(optional.get().getIsBlocked());
+
+            return otherUserDTO;
+        }
+        return null;
     }
 }
