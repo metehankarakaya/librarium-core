@@ -48,7 +48,7 @@ public class QuoteServiceImpl implements QuoteService {
         User user = getCurrentUser();
 
         Quote quote = quoteDTOToQuoteMapper.map(quoteDTO);
-        quote.setUser(userToUserDTOMapper.map(user));
+        quote.setUser(user);
         quote.setLikeCount(0);
         quote.setDislikeCount(0);
         quote.setCreatedDate(getNow());
