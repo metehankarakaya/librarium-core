@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -62,7 +64,9 @@ public class QuoteServiceImpl implements QuoteService {
 
     @Override
     public List<QuoteDTO> findAllQuotes() {
-        return quoteRepository.findAll().stream().map(quoteToQuoteDTOMapper::map).collect(Collectors.toList());
+        List<QuoteDTO> quoteDTOS = quoteRepository.findAll().stream().map(quoteToQuoteDTOMapper::map).collect(Collectors.toList());
+        Collections.reverse(quoteDTOS);
+        return quoteDTOS;
     }
 
     @Override
