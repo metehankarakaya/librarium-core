@@ -15,4 +15,6 @@ public interface UserRepository extends MongoRepository<User, String> {
     @Aggregation(pipeline = {"{'$sample':{size:?0}}",})
     List<User> findRandomUsers(int sampleSize);
 
+    List<User> findByUsernameContainsIgnoreCaseOrFirstNameContainsIgnoreCaseOrLastNameContainsIgnoreCase(String keyword0, String keyword1, String keyword2);
+
 }

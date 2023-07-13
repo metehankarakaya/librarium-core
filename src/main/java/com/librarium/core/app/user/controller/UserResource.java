@@ -37,4 +37,9 @@ public class UserResource {
         return ResponseEntity.ok(userService.findRandomUsers());
     }
 
+    @GetMapping("/find/users/by/keyword/{keyword}")
+    public ResponseEntity<List<UserDTO>> findUsersByKeyword(@PathVariable String keyword) {
+        return ResponseEntity.ok(userService.findUsersByKeyword(keyword));
+    }
+
 }

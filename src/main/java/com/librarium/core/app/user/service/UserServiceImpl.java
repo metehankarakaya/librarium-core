@@ -93,4 +93,9 @@ public class UserServiceImpl implements UserService {
     public List<UserDTO> findRandomUsers() {
         return userRepository.findRandomUsers(10).stream().map(userToUserDTOMapper::map).collect(Collectors.toList());
     }
+
+    @Override
+    public List<UserDTO> findUsersByKeyword(String keyword) {
+        return userRepository.findByUsernameContainsIgnoreCaseOrFirstNameContainsIgnoreCaseOrLastNameContainsIgnoreCase(keyword, keyword, keyword).stream().map(userToUserDTOMapper::map).collect(Collectors.toList());
+    }
 }

@@ -21,4 +21,6 @@ public interface UserService extends BaseService {
 
     List<UserDTO> findRandomUsers();
 
+    List<UserDTO> findUsersByKeyword(String keyword);
+
 }
