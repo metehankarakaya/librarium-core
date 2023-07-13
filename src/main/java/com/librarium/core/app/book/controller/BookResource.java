@@ -25,4 +25,9 @@ public class BookResource {
         return ResponseEntity.ok(bookService.findRandomBooks());
     }
 
+    @GetMapping("/find/books/by/keyword/{keyword}")
+    public ResponseEntity<List<BookDTO>> findBooksByKeyword(@PathVariable String keyword) {
+        return ResponseEntity.ok(bookService.findBooksByKeyword(keyword));
+    }
+
 }

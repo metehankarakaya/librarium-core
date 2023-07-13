@@ -66,4 +66,9 @@ public class BookServiceImpl implements BookService {
     public List<BookDTO> findRandomBooks() {
         return bookRepository.findRandomBooks(10).stream().map(bookToBookDTOMapper::map).collect(Collectors.toList());
     }
+
+    @Override
+    public List<BookDTO> findBooksByKeyword(String keyword) {
+        return bookRepository.findByTitleContainsIgnoreCase(keyword).stream().map(bookToBookDTOMapper::map).collect(Collectors.toList());
+    }
 }
