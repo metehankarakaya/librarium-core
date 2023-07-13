@@ -4,10 +4,9 @@ import com.librarium.core.app.book.model.BookDTO;
 import com.librarium.core.app.book.service.BookServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,6 +18,11 @@ public class BookResource {
     @PostMapping("/save/book")
     public ResponseEntity<Boolean> saveBook(@RequestBody BookDTO bookDTO) {
         return ResponseEntity.ok(bookService.saveBook(bookDTO));
+    }
+
+    @GetMapping("/find/random/books")
+    public ResponseEntity<List<BookDTO>> findRandomBooks() {
+        return ResponseEntity.ok(bookService.findRandomBooks());
     }
 
 }
