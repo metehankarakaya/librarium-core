@@ -9,11 +9,14 @@ import com.librarium.core.app.user.model.UserDTOToUserMapper;
 import com.librarium.core.app.user.model.UserToUserDTOMapper;
 import com.librarium.core.app.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Base64;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +39,8 @@ public class UserServiceImpl implements UserService {
     public LocalDateTime getNow() {
         return baseService.getNow();
     }
+
+    private MongoTemplate mongoTemplate;
 
     @Override
     public String createToken(String username, String password) {
@@ -82,5 +87,10 @@ public class UserServiceImpl implements UserService {
             return otherUserDTO;
         }
         return null;
+    }
+
+    @Override
+    public List<UserDTO> findRandomUsers() {
+        return userRepository.findRandomUsers(10).stream().map(userToUserDTOMapper::map).collect(Collectors.toList());
     }
 }

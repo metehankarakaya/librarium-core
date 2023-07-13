@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/private-app-api")
@@ -28,6 +30,11 @@ public class UserResource {
     @PostMapping("/edit/about/me")
     public ResponseEntity<Boolean> editAboutMe(@RequestBody EditAboutMeDTO editAboutMeDTO) {
         return ResponseEntity.ok(userService.editAboutMe(editAboutMeDTO));
+    }
+
+    @GetMapping("/find/random/users")
+    public ResponseEntity<List<UserDTO>> findRandomUsers() {
+        return ResponseEntity.ok(userService.findRandomUsers());
     }
 
 }

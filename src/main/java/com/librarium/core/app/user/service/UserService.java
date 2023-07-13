@@ -6,6 +6,8 @@ import com.librarium.core.app.common.service.BaseService;
 import com.librarium.core.app.user.model.UserDTO;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface UserService extends BaseService {
 
@@ -16,5 +18,7 @@ public interface UserService extends BaseService {
     Boolean editAboutMe(EditAboutMeDTO editAboutMeDTO);
 
     OtherUserDTO findOtherUserDetail(String otherUserId);
+
+    List<UserDTO> findRandomUsers();
 
 }
