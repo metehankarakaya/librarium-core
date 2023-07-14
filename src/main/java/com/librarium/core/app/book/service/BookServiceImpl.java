@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -70,5 +71,11 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<BookDTO> findBooksByKeyword(String keyword) {
         return bookRepository.findByTitleContainsIgnoreCase(keyword).stream().map(bookToBookDTOMapper::map).collect(Collectors.toList());
+    }
+
+    @Override
+    public BookDTO findBookDetails(String bookId) {
+        Optional<Book> optional = bookRepository.findById(bookId);
+        return optional.map(bookToBookDTOMapper::map).orElse(null);
     }
 }
