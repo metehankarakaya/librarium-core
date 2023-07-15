@@ -92,7 +92,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> findRandomUsers() {
-        return userRepository.findRandomUsers(10).stream().map(userToUserDTOMapper::map).collect(Collectors.toList());
+        User user = getCurrentUser();
+        return userRepository.findRandomUsers(10, user.getId()).stream().map(userToUserDTOMapper::map).collect(Collectors.toList()); // id'yi parametre olarak gönder
     }
 
     @Override
