@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
@@ -129,4 +130,18 @@ public class UserServiceImpl implements UserService {
         return Boolean.FALSE;
     }
 
+    @Override
+    public List<UserDTO> findFollowersByUserId(String userId) {
+        List<UserDTO> userDTOS = new ArrayList<>();
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            for (String e : optionalUser.get().getFollowings()) {
+                Optional<User> optional = userRepository.findById(e);
+                if (optional.isPresent()) {
+                    userDTOS.add(userToUserDTOMapper.map(optional.get()));
+                }
+            }
+        }
+        return userDTOS;
+    }
 }
