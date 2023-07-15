@@ -144,4 +144,20 @@ public class UserServiceImpl implements UserService {
         }
         return userDTOS;
     }
+
+    @Override
+    public List<UserDTO> findFollowersByUserId(String userId) {
+        List<UserDTO> userDTOS = new ArrayList<>();
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            for (String e : optionalUser.get().getFollowers()) {
+                Optional<User> optional = userRepository.findById(e);
+                if (optional.isPresent()) {
+                    userDTOS.add(userToUserDTOMapper.map(optional.get()));
+                }
+            }
+        }
+        return userDTOS;
+    }
+
 }

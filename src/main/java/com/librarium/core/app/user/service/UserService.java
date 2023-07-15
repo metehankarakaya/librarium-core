@@ -29,4 +29,6 @@ public interface UserService extends BaseService {
 
     List<UserDTO> findFollowingsByUserId(String userId);
 
+    List<UserDTO> findFollowersByUserId(String userId);
+
 }
