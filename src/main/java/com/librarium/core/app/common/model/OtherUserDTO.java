@@ -9,6 +9,8 @@ public class OtherUserDTO {
 
     private String id;
 
+    private String visitorId;
+
     private String username;
 
     private String firstName;

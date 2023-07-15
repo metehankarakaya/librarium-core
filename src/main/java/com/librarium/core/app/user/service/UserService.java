@@ -23,4 +23,8 @@ public interface UserService extends BaseService {
 
     List<UserDTO> findUsersByKeyword(String keyword);
 
+    Boolean followOtherUser(String otherUserId);
+
+    Boolean unfollowOtherUser(String otherUserId);
+
 }

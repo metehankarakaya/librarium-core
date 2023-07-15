@@ -68,6 +68,7 @@ public class UserServiceImpl implements UserService {
             OtherUserDTO otherUserDTO = new OtherUserDTO();
 
             otherUserDTO.setId(optional.get().getId());
+            otherUserDTO.setVisitorId(getCurrentUser().getId());
             otherUserDTO.setUsername(optional.get().getUsername());
             otherUserDTO.setFirstName(optional.get().getFirstName());
             otherUserDTO.setLastName(optional.get().getLastName());
@@ -98,4 +99,33 @@ public class UserServiceImpl implements UserService {
     public List<UserDTO> findUsersByKeyword(String keyword) {
         return userRepository.findByUsernameContainsIgnoreCaseOrFirstNameContainsIgnoreCaseOrLastNameContainsIgnoreCase(keyword, keyword, keyword).stream().map(userToUserDTOMapper::map).collect(Collectors.toList());
     }
+
+    @Override
+    public Boolean followOtherUser(String otherUserId) {
+        User user = getCurrentUser();
+        Optional<User> optionalOtherUser = userRepository.findById(otherUserId);
+        if (optionalOtherUser.isPresent()) {
+            optionalOtherUser.get().getFollowers().add(user.getId());
+            user.getFollowings().add(optionalOtherUser.get().getId());
+            userRepository.save(optionalOtherUser.get());
+            userRepository.save(user);
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
+    }
+
+    @Override
+    public Boolean unfollowOtherUser(String otherUserId) {
+        User user = getCurrentUser();
+        Optional<User> optionalOtherUser = userRepository.findById(otherUserId);
+        if (optionalOtherUser.isPresent()) {
+            optionalOtherUser.get().getFollowers().remove(user.getId());
+            user.getFollowings().remove(optionalOtherUser.get().getId());
+            userRepository.save(optionalOtherUser.get());
+            userRepository.save(user);
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
+    }
+
 }

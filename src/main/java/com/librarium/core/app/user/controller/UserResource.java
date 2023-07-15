@@ -42,4 +42,14 @@ public class UserResource {
         return ResponseEntity.ok(userService.findUsersByKeyword(keyword));
     }
 
+    @GetMapping("/follow/other/user/{otherUserId}")
+    public ResponseEntity<Boolean> followOtherUser(@PathVariable String otherUserId) {
+        return ResponseEntity.ok(userService.followOtherUser(otherUserId));
+    }
+
+    @GetMapping("/unfollow/other/user/{otherUserId}")
+    public ResponseEntity<Boolean> unfollowOtherUser(@PathVariable String otherUserId) {
+        return ResponseEntity.ok(userService.unfollowOtherUser(otherUserId));
+    }
+
 }
