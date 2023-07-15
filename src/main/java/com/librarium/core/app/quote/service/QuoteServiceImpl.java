@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -63,8 +62,25 @@ public class QuoteServiceImpl implements QuoteService {
     }
 
     @Override
-    public List<QuoteDTO> findAllQuotes() {
-        List<QuoteDTO> quoteDTOS = quoteRepository.findAll().stream().map(quoteToQuoteDTOMapper::map).collect(Collectors.toList());
+    public List<QuoteDTO> findQuotesByUserAndFollowings() {
+        User user = getCurrentUser();
+        List<QuoteDTO> quoteDTOS = new ArrayList<>();
+
+        for (String quoteId : user.getQuotes()) {
+            Optional<Quote> optionalQuote = quoteRepository.findById(quoteId);
+            optionalQuote.ifPresent(quote -> quoteDTOS.add(quoteToQuoteDTOMapper.map(quote)));
+        }
+
+        for (String userId : user.getFollowings()) {
+            Optional<User> optionalUser = userRepository.findById(userId);
+            if (optionalUser.isPresent()) {
+                for (String quoteId : optionalUser.get().getQuotes()) {
+                    Optional<Quote> optionalQuote = quoteRepository.findById(quoteId);
+                    optionalQuote.ifPresent(quote -> quoteDTOS.add(quoteToQuoteDTOMapper.map(quote)));
+                }
+            }
+        }
+        quoteDTOS.sort((p1, p2) -> p1.getCreatedDate().isBefore(p2.getCreatedDate()) ? -1 : p1.getCreatedDate().isAfter(p2.getCreatedDate()) ? 1 : 0);
         Collections.reverse(quoteDTOS);
         return quoteDTOS;
     }

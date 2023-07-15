@@ -21,8 +21,8 @@ public class QuoteResource {
     }
 
     @GetMapping("/find/all/quotes")
-    public ResponseEntity<List<QuoteDTO>> findAllQuotes() {
-        return ResponseEntity.ok(quoteService.findAllQuotes());
+    public ResponseEntity<List<QuoteDTO>> findQuotesByUserAndFollowings() {
+        return ResponseEntity.ok(quoteService.findQuotesByUserAndFollowings());
     }
 
     @GetMapping("/like/quote/{quoteId}")
