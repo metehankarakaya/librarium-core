@@ -13,6 +13,6 @@ public interface BookRepository extends MongoRepository<Book, String> {
     @Aggregation(pipeline = {"{'$sample':{size:?0}}",})
     List<Book> findRandomBooks(int sampleSize);
 
-    List<Book> findByTitleContainsIgnoreCase(String keyword0);
+    List<Book> findByTitleContainsIgnoreCase(String keyword);
 
 }

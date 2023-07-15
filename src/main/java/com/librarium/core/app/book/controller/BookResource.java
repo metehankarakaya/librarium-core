@@ -36,4 +36,9 @@ public class BookResource {
         return ResponseEntity.ok(bookService.findBookDetails(bookId));
     }
 
+    @GetMapping("/find/books/by/user/id/{userId}")
+    public ResponseEntity<List<BookDTO>> findBooksByUserId(@PathVariable String userId) {
+        return ResponseEntity.ok(bookService.findBooksByUserId(userId));
+    }
+
 }

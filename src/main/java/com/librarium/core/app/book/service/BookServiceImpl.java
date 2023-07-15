@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -77,5 +78,20 @@ public class BookServiceImpl implements BookService {
     public BookDTO findBookDetails(String bookId) {
         Optional<Book> optional = bookRepository.findById(bookId);
         return optional.map(bookToBookDTOMapper::map).orElse(null);
+    }
+
+    @Override
+    public List<BookDTO> findBooksByUserId(String userId) {
+        List<BookDTO> bookDTOS = new ArrayList<>();
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            for (String bookId : optionalUser.get().getAddedBooks()) {
+                Optional<Book> optionalBook = bookRepository.findById(bookId);
+                if (optionalBook.isPresent()) {
+                    bookDTOS.add(bookToBookDTOMapper.map(optionalBook.get()));
+                }
+            }
+        }
+        return bookDTOS;
     }
 }
