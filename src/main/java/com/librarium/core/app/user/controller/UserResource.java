@@ -52,7 +52,7 @@ public class UserResource {
         return ResponseEntity.ok(userService.unfollowOtherUser(otherUserId));
     }
 
-    @GetMapping("/find/followers/by/user/id/{userId}")
+    @GetMapping("/find/followings/by/user/id/{userId}")
     public ResponseEntity<List<UserDTO>> findFollowingsByUserId(@PathVariable String userId) {
         return ResponseEntity.ok(userService.findFollowingsByUserId(userId));
     }
