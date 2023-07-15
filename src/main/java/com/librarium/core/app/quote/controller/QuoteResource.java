@@ -35,4 +35,9 @@ public class QuoteResource {
         return ResponseEntity.ok(quoteService.dislikeQuote(quoteId));
     }
 
+    @GetMapping("/find/quotes/by/user/id/{userId}")
+    public ResponseEntity<List<QuoteDTO>> findQuotesByUserId(@PathVariable String userId) {
+        return ResponseEntity.ok(quoteService.findQuotesByUserId(userId));
+    }
+
 }

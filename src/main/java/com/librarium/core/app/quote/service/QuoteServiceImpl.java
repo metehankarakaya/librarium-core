@@ -90,4 +90,19 @@ public class QuoteServiceImpl implements QuoteService {
         }
         return Boolean.FALSE;
     }
+
+    @Override
+    public List<QuoteDTO> findQuotesByUserId(String userId) {
+        List<QuoteDTO> quoteDTOS = new ArrayList<>();
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            for (String quoteId : optionalUser.get().getQuotes()) {
+                Optional<Quote> optionalQuote = quoteRepository.findById(quoteId);
+                if (optionalQuote.isPresent()) {
+                    quoteDTOS.add(quoteToQuoteDTOMapper.map(optionalQuote.get()));
+                }
+            }
+        }
+        return quoteDTOS;
+    }
 }

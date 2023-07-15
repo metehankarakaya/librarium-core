@@ -17,4 +17,6 @@ public interface QuoteService extends BaseService {
 
     Boolean dislikeQuote(String quoteId);
 
+    List<QuoteDTO> findQuotesByUserId(String userId);
+
 }
