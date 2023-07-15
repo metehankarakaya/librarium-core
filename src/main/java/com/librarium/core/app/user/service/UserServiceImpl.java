@@ -13,10 +13,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -142,6 +139,7 @@ public class UserServiceImpl implements UserService {
                 }
             }
         }
+        Collections.reverse(userDTOS);
         return userDTOS;
     }
 
@@ -157,6 +155,7 @@ public class UserServiceImpl implements UserService {
                 }
             }
         }
+        Collections.reverse(userDTOS);
         return userDTOS;
     }
 

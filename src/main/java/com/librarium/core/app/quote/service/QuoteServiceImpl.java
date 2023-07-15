@@ -103,6 +103,7 @@ public class QuoteServiceImpl implements QuoteService {
                 }
             }
         }
+        Collections.reverse(quoteDTOS);
         return quoteDTOS;
     }
 }
