@@ -131,7 +131,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> findFollowersByUserId(String userId) {
+    public List<UserDTO> findFollowingsByUserId(String userId) {
         List<UserDTO> userDTOS = new ArrayList<>();
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isPresent()) {

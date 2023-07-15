@@ -27,6 +27,6 @@ public interface UserService extends BaseService {
 
     Boolean unfollowOtherUser(String otherUserId);
 
-    List<UserDTO> findFollowersByUserId(String userId);
+    List<UserDTO> findFollowingsByUserId(String userId);
 
 }

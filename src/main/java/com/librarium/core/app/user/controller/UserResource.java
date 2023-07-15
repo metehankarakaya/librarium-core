@@ -53,8 +53,8 @@ public class UserResource {
     }
 
     @GetMapping("/find/followers/by/user/id/{userId}")
-    public ResponseEntity<List<UserDTO>> findFollowersByUserId(@PathVariable String userId) {
-        return ResponseEntity.ok(userService.findFollowersByUserId(userId));
+    public ResponseEntity<List<UserDTO>> findFollowingsByUserId(@PathVariable String userId) {
+        return ResponseEntity.ok(userService.findFollowingsByUserId(userId));
     }
 
 }
