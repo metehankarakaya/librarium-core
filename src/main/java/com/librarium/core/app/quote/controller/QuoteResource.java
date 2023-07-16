@@ -20,7 +20,7 @@ public class QuoteResource {
         return ResponseEntity.ok(quoteService.addQuote(quoteDTO));
     }
 
-    @GetMapping("/find/all/quotes")
+    @GetMapping("/find/quotes/by/user/and/followings")
     public ResponseEntity<List<QuoteDTO>> findQuotesByUserAndFollowings() {
         return ResponseEntity.ok(quoteService.findQuotesByUserAndFollowings());
     }
