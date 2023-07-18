@@ -18,7 +18,7 @@ public class UserResource {
     private final UserServiceImpl userService;
 
     @GetMapping("/find/other/user/detail/{otherUserId}")
-    public ResponseEntity<OtherUserDTO> findUserDetail(@PathVariable String otherUserId) {
+    public ResponseEntity<OtherUserDTO> findOtherUserDetail(@PathVariable String otherUserId) {
         return ResponseEntity.ok(userService.findOtherUserDetail(otherUserId));
     }
 
