@@ -26,6 +26,11 @@ public class UserBuilder {
         return this;
     }
 
+    public UserBuilder withToken(String token) {
+        userDTO.setToken(token);
+        return this;
+    }
+
     public UserBuilder withAvatar(byte[] avatar) {
         userDTO.setAvatar(avatar);
         return this;
