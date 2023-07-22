@@ -80,6 +80,8 @@ public class UserServiceImpl implements UserService {
             otherUserDTO.setAddedBooks(optional.get().getAddedBooks());
             otherUserDTO.setQuotes(optional.get().getQuotes());
 
+            otherUserDTO.setCreatedDate(optional.get().getCreatedDate());
+
             otherUserDTO.setBlockReason(optional.get().getBlockReason());
             otherUserDTO.setIsBlocked(optional.get().getIsBlocked());
 

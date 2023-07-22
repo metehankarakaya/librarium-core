@@ -2,6 +2,7 @@ package com.librarium.core.app.common.model;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -32,6 +33,8 @@ public class OtherUserDTO {
     private List<String> addedBooks;
 
     private List<String> quotes;
+
+    private LocalDateTime createdDate;
 
     private String blockReason;
 
