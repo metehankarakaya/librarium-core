@@ -11,7 +11,7 @@ public interface QuoteService extends BaseService {
 
     Boolean addQuote(QuoteDTO quoteDTO);
 
-    List<QuoteDTO> findQuotesByUserAndFollowings();
+    List<QuoteDTO> findQuotesByUserAndFollowings(Integer pageNumber, Integer pageSize);
 
     Boolean likeQuote(String quoteId);
 

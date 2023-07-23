@@ -21,8 +21,11 @@ public class QuoteResource {
     }
 
     @GetMapping("/find/quotes/by/user/and/followings")
-    public ResponseEntity<List<QuoteDTO>> findQuotesByUserAndFollowings() {
-        return ResponseEntity.ok(quoteService.findQuotesByUserAndFollowings());
+    public ResponseEntity<List<QuoteDTO>> findQuotesByUserAndFollowings(
+            @RequestParam(defaultValue = "0", name = "pageNumber", required = false) Integer pageNumber,
+            @RequestParam(defaultValue = "10", name = "pageSize", required = false) Integer pageSize) {
+        List<QuoteDTO> quoteDTOS = quoteService.findQuotesByUserAndFollowings(pageNumber, pageSize);
+        return ResponseEntity.ok(quoteDTOS);
     }
 
     @GetMapping("/like/quote/{quoteId}")

@@ -10,6 +10,9 @@ import com.librarium.core.app.user.model.User;
 import com.librarium.core.app.user.model.UserToUserDTOMapper;
 import com.librarium.core.app.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -17,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -62,27 +66,14 @@ public class QuoteServiceImpl implements QuoteService {
     }
 
     @Override
-    public List<QuoteDTO> findQuotesByUserAndFollowings() {
+    public List<QuoteDTO> findQuotesByUserAndFollowings(Integer pageNumber, Integer pageSize) {
         User user = getCurrentUser();
-        List<QuoteDTO> quoteDTOS = new ArrayList<>();
+        List<String> userIds = new ArrayList<>(user.getFollowings());
+        userIds.add(user.getId());
 
-        for (String quoteId : user.getQuotes()) {
-            Optional<Quote> optionalQuote = quoteRepository.findById(quoteId);
-            optionalQuote.ifPresent(quote -> quoteDTOS.add(quoteToQuoteDTOMapper.map(quote)));
-        }
-
-        for (String userId : user.getFollowings()) {
-            Optional<User> optionalUser = userRepository.findById(userId);
-            if (optionalUser.isPresent()) {
-                for (String quoteId : optionalUser.get().getQuotes()) {
-                    Optional<Quote> optionalQuote = quoteRepository.findById(quoteId);
-                    optionalQuote.ifPresent(quote -> quoteDTOS.add(quoteToQuoteDTOMapper.map(quote)));
-                }
-            }
-        }
-        quoteDTOS.sort((p1, p2) -> p1.getCreatedDate().isBefore(p2.getCreatedDate()) ? -1 : p1.getCreatedDate().isAfter(p2.getCreatedDate()) ? 1 : 0);
-        Collections.reverse(quoteDTOS);
-        return quoteDTOS;
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "createdDate"));
+        List<Quote> quotes = quoteRepository.findQuotesByUserIds(userIds, pageable).getContent();
+        return quotes.stream().map(quoteToQuoteDTOMapper::map).collect(Collectors.toList());
     }
 
     @Override
