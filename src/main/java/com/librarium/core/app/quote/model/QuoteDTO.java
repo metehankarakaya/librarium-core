@@ -1,5 +1,6 @@
 package com.librarium.core.app.quote.model;
 
+import com.librarium.core.app.book.model.BookDTO;
 import com.librarium.core.app.user.model.UserDTO;
 import lombok.Data;
 
@@ -13,6 +14,8 @@ public class QuoteDTO {
     private String content;
 
     private UserDTO user;
+
+    private BookDTO book;
 
     private Integer likeCount;
 

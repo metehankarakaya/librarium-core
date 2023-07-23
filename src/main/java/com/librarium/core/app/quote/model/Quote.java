@@ -1,5 +1,6 @@
 package com.librarium.core.app.quote.model;
 
+import com.librarium.core.app.book.model.Book;
 import com.librarium.core.app.user.model.User;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -20,6 +21,9 @@ public class Quote {
 
     @Field
     private User user;
+
+    @Field
+    private Book book;
 
     @Field
     private Integer likeCount;
