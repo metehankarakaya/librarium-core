@@ -41,4 +41,9 @@ public class BookResource {
         return ResponseEntity.ok(bookService.findBooksByUserId(userId));
     }
 
+    @GetMapping("/find/all/books")
+    public ResponseEntity<List<BookDTO>> findAllBooks() {
+        return ResponseEntity.ok(bookService.findAllBooks());
+    }
+
 }

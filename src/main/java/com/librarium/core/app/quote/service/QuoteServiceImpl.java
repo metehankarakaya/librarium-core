@@ -1,5 +1,7 @@
 package com.librarium.core.app.quote.service;
 
+import com.librarium.core.app.book.model.BookDTOToBookMapper;
+import com.librarium.core.app.book.model.BookToBookDTOMapper;
 import com.librarium.core.app.common.service.BaseServiceImpl;
 import com.librarium.core.app.quote.model.Quote;
 import com.librarium.core.app.quote.model.QuoteDTO;
@@ -32,6 +34,10 @@ public class QuoteServiceImpl implements QuoteService {
 
     private final QuoteDTOToQuoteMapper quoteDTOToQuoteMapper;
 
+    private final BookDTOToBookMapper bookDTOToBookMapper;
+
+    private final BookToBookDTOMapper bookToBookDTOMapper;
+
     private final UserToUserDTOMapper userToUserDTOMapper;
 
     private final UserRepository userRepository;
@@ -57,6 +63,8 @@ public class QuoteServiceImpl implements QuoteService {
         quote.setLikeCount(0);
         quote.setDislikeCount(0);
         quote.setCreatedDate(getNow());
+        quote.setBook(bookDTOToBookMapper.map(quoteDTO.getBook()));
+        quote.setPageNumber(quoteDTO.getPageNumber());
         Quote savedQuote = quoteRepository.save(quote);
 
         user.getQuotes().add(savedQuote.getId());

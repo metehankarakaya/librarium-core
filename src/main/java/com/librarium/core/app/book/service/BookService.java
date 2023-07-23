@@ -19,4 +19,6 @@ public interface BookService extends BaseService {
 
     List<BookDTO> findBooksByUserId(String userId);
 
+    List<BookDTO> findAllBooks();
+
 }

@@ -96,4 +96,9 @@ public class BookServiceImpl implements BookService {
         Collections.reverse(bookDTOS);
         return bookDTOS;
     }
+
+    @Override
+    public List<BookDTO> findAllBooks() {
+        return bookRepository.findAll().stream().map(bookToBookDTOMapper::map).collect(Collectors.toList());
+    }
 }
