@@ -5,7 +5,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
-public interface PostToPostDTOMapper extends BaseMapper<PostDTO, Post> {
+public interface PostToPostDTOMapper extends BaseMapper<Post, PostDTO> {
 
     PostToPostDTOMapper INSTANCE = Mappers.getMapper(PostToPostDTOMapper.class);
 

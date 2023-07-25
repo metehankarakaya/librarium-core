@@ -38,10 +38,14 @@ public class PostServiceImpl implements PostService {
     @Override
     public Boolean addPost(PostDTO postDTO) {
         User user = getCurrentUser();
-        Post post = postToPostDTOMapper.map(postDTO);
+        Post post = postDTOToPostMapper.map(postDTO);
         post.setUser(user);
-        post.setContent(postDTO.getContent());
-        post.setImage(postDTO.getImage());
+        if (postDTO.getContent() != null) {
+            post.setContent(postDTO.getContent());
+        }
+        if (postDTO.getImage() != null) {
+            post.setImage(postDTO.getImage());
+        }
         post.setCreatedDate(getNow());
         Post savedPost = postRepository.save(post);
         Optional<Post> optional = postRepository.findById(savedPost.getId());
