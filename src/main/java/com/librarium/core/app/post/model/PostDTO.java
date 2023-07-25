@@ -1,6 +1,6 @@
 package com.librarium.core.app.post.model;
 
-import com.librarium.core.app.user.model.User;
+import com.librarium.core.app.user.model.UserDTO;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -16,7 +16,7 @@ public class PostDTO {
 
     private byte[] image;
 
-    private User user;
+    private UserDTO user;
 
     private LocalDateTime createdDate;
 
