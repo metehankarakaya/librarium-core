@@ -7,17 +7,19 @@ import com.librarium.core.app.post.model.PostDTOToPostMapper;
 import com.librarium.core.app.post.model.PostToPostDTOMapper;
 import com.librarium.core.app.post.repository.PostRepository;
 import com.librarium.core.app.user.model.User;
+import com.librarium.core.app.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
 
     private final BaseServiceImpl baseService;
+
+    private final UserRepository userRepository;
 
     private final PostRepository postRepository;
 
@@ -38,6 +40,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public Boolean addPost(PostDTO postDTO) {
         User user = getCurrentUser();
+
         Post post = postDTOToPostMapper.map(postDTO);
         post.setUser(user);
         if (postDTO.getContent() != null) {
@@ -48,11 +51,11 @@ public class PostServiceImpl implements PostService {
         }
         post.setCreatedDate(getNow());
         Post savedPost = postRepository.save(post);
-        Optional<Post> optional = postRepository.findById(savedPost.getId());
-        if (optional.isPresent()) {
-            return Boolean.TRUE;
-        }
-        return Boolean.FALSE;
+
+        user.getPosts().add(savedPost.getId());
+        userRepository.save(user);
+
+        return Boolean.TRUE;
     }
 
 }
