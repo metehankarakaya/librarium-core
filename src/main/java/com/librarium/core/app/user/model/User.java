@@ -58,6 +58,9 @@ public class User {
     private List<String> quotes; //id list
 
     @Field
+    private List<String> posts; //id list
+
+    @Field
     private LocalDateTime birthDate;
 
     @Field

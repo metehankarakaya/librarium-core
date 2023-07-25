@@ -34,6 +34,8 @@ public class OtherUserDTO {
 
     private List<String> quotes;
 
+    private List<String> posts;
+
     private LocalDateTime createdDate;
 
     private String blockReason;

@@ -36,6 +36,8 @@ public class UserDTO {
 
     private List<String> quotes;
 
+    private List<String> posts;
+
     private LocalDateTime birthDate;
 
     private LocalDateTime createdDate;
