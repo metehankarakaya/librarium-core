@@ -12,11 +12,11 @@ public class DashboardItemDTO {
 
     private String type;
 
-    private QuoteDTO quoteDTO;
+    private QuoteDTO quote;
 
-    private PostDTO postDTO;
+    private PostDTO post;
 
-    private UserDTO userDTO;
+    private UserDTO user;
 
     private LocalDateTime createdDate;
 

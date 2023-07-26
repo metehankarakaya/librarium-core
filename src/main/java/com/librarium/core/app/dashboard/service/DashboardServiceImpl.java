@@ -69,10 +69,10 @@ public class DashboardServiceImpl implements DashboardService {
         for (Quote quote : quotes) {
             DashboardItemDTO dashboardItemDTO = new DashboardItemDTO();
             dashboardItemDTO.setType("quote");
-            dashboardItemDTO.setQuoteDTO(quoteToQuoteDTOMapper.map(quote));
+            dashboardItemDTO.setQuote(quoteToQuoteDTOMapper.map(quote));
             //dashboardItemDTO.setPostDTO(null);
             dashboardItemDTO.setCreatedDate(quote.getCreatedDate());
-            dashboardItemDTO.setUserDTO(userToUserDTOMapper.map(user));
+            dashboardItemDTO.setUser(userToUserDTOMapper.map(user));
             dashboardItems.add(dashboardItemDTO);
         }
 
@@ -80,9 +80,9 @@ public class DashboardServiceImpl implements DashboardService {
             DashboardItemDTO dashboardItemDTO = new DashboardItemDTO();
             dashboardItemDTO.setType("post");
             //dashboardItemDTO.setQuoteDTO(null);
-            dashboardItemDTO.setPostDTO(postToPostDTOMapper.map(post));
+            dashboardItemDTO.setPost(postToPostDTOMapper.map(post));
             dashboardItemDTO.setCreatedDate(post.getCreatedDate());
-            dashboardItemDTO.setUserDTO(userToUserDTOMapper.map(user));
+            dashboardItemDTO.setUser(userToUserDTOMapper.map(user));
             dashboardItems.add(dashboardItemDTO);
         }
 
