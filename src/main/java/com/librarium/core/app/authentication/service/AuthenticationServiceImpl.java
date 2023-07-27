@@ -1,6 +1,8 @@
 package com.librarium.core.app.authentication.service;
 
 import com.librarium.core.app.common.model.LoginDTO;
+import com.librarium.core.app.draft.model.Draft;
+import com.librarium.core.app.draft.repository.DraftRepository;
 import com.librarium.core.app.user.model.User;
 import com.librarium.core.app.user.model.UserDTO;
 import com.librarium.core.app.user.model.UserDTOToUserMapper;
@@ -18,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Base64;
 
 @Service
@@ -31,6 +34,8 @@ public class AuthenticationServiceImpl implements AuthenticationProvider, Authen
     private final PasswordEncoder passwordEncoder;
 
     private final UserRepository userRepository;
+
+    private final DraftRepository draftRepository;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -77,6 +82,17 @@ public class AuthenticationServiceImpl implements AuthenticationProvider, Authen
 
             String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
             user.setPassword(encodedPassword);
+
+            Draft draft = new Draft();
+            draft.setQuotes(new ArrayList<>());
+            draft.setPosts(new ArrayList<>());
+            draft.setCapacity(50);
+            draft.setIsUpgraded(Boolean.FALSE);
+            draft.setUpgradedDate(null);
+            draft.setCreatedDate(LocalDateTime.now());
+            Draft savedDraft = draftRepository.save(draft);
+
+            user.setDraft(savedDraft);
 
             user.setIsBlocked(Boolean.FALSE);
             userRepository.save(user);
