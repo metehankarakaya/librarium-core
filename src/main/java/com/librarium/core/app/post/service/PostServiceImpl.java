@@ -1,6 +1,8 @@
 package com.librarium.core.app.post.service;
 
 import com.librarium.core.app.common.service.BaseServiceImpl;
+import com.librarium.core.app.draft.model.Draft;
+import com.librarium.core.app.draft.repository.DraftRepository;
 import com.librarium.core.app.post.model.Post;
 import com.librarium.core.app.post.model.PostDTO;
 import com.librarium.core.app.post.model.PostDTOToPostMapper;
@@ -22,6 +24,8 @@ public class PostServiceImpl implements PostService {
     private final UserRepository userRepository;
 
     private final PostRepository postRepository;
+
+    private final DraftRepository draftRepository;
 
     private final PostToPostDTOMapper postToPostDTOMapper;
 
@@ -58,4 +62,29 @@ public class PostServiceImpl implements PostService {
         return Boolean.TRUE;
     }
 
+    @Override
+    public Boolean addPostToDraft(PostDTO postDTO) {
+        User user = getCurrentUser();
+
+        Post post = postDTOToPostMapper.map(postDTO);
+        post.setUser(user);
+        if (postDTO.getContent() != null) {
+            post.setContent(postDTO.getContent());
+        }
+        if (postDTO.getImage() != null) {
+            post.setImage(postDTO.getImage());
+        }
+        post.setCreatedDate(getNow());
+
+        Draft founDraft = draftRepository.findByUserId(user.getId());
+        if (founDraft.getPosts().size() + founDraft.getQuotes().size() > 0) {
+            if (founDraft.getPosts().size() + founDraft.getQuotes().size() < 50) {
+                founDraft.getPosts().add(post);
+                draftRepository.save(founDraft);
+
+                return Boolean.TRUE;
+            }
+        }
+        return Boolean.FALSE;
+    }
 }

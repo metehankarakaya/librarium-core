@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DraftRepository extends MongoRepository<Draft, String> {
+
+    Draft findByUserId(String userId);
+
 }

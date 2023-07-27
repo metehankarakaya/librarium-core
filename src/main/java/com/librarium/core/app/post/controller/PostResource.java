@@ -21,4 +21,9 @@ public class PostResource {
         return ResponseEntity.ok(postService.addPost(postDTO));
     }
 
+    @PostMapping("/add/post/to/draft")
+    public ResponseEntity<Boolean> addPostToDraft(@RequestBody PostDTO postDTO) {
+        return ResponseEntity.ok(postService.addPostToDraft(postDTO));
+    }
+
 }

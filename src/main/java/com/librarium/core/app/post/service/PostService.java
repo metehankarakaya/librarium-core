@@ -9,4 +9,6 @@ public interface PostService extends BaseService {
 
     Boolean addPost(PostDTO postDTO);
 
+    Boolean addPostToDraft(PostDTO postDTO);
+
 }
