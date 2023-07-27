@@ -1,5 +1,6 @@
 package com.librarium.core.app.user.model;
 
+import com.librarium.core.app.draft.model.Draft;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -59,6 +60,9 @@ public class User {
 
     @Field
     private List<String> posts; //id list
+
+    @Field
+    private Draft draft;
 
     @Field
     private LocalDateTime birthDate;
