@@ -83,19 +83,19 @@ public class AuthenticationServiceImpl implements AuthenticationProvider, Authen
             String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
             user.setPassword(encodedPassword);
 
+            user.setIsBlocked(Boolean.FALSE);
+            User savedUser = userRepository.save(user);
+
             Draft draft = new Draft();
+            draft.setUserId(savedUser.getId());
             draft.setQuotes(new ArrayList<>());
             draft.setPosts(new ArrayList<>());
             draft.setCapacity(50);
             draft.setIsUpgraded(Boolean.FALSE);
             draft.setUpgradedDate(null);
             draft.setCreatedDate(LocalDateTime.now());
-            Draft savedDraft = draftRepository.save(draft);
+            draftRepository.save(draft);
 
-            user.setDraft(savedDraft);
-
-            user.setIsBlocked(Boolean.FALSE);
-            userRepository.save(user);
             return Boolean.TRUE;
         }
         return Boolean.FALSE;
