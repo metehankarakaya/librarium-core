@@ -1,10 +1,8 @@
 package com.librarium.core.app.user.model;
 
-import com.librarium.core.app.draft.model.Draft;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -61,10 +59,6 @@ public class User {
 
     @Field
     private List<String> posts; //id list
-
-    @DBRef
-    @Field
-    private Draft draft;
 
     @Field
     private LocalDateTime birthDate;

@@ -18,6 +18,9 @@ public class Draft {
     private String id;
 
     @Field
+    private String userId;
+
+    @Field
     private List<Quote> quotes;
 
     @Field

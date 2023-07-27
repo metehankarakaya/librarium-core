@@ -1,6 +1,5 @@
 package com.librarium.core.app.user.model;
 
-import com.librarium.core.app.draft.model.DraftDTO;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -38,8 +37,6 @@ public class UserDTO {
     private List<String> quotes;
 
     private List<String> posts;
-
-    private DraftDTO draft;
 
     private LocalDateTime birthDate;
 

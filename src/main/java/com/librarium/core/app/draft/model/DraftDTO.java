@@ -12,6 +12,8 @@ public class DraftDTO {
 
     private String id;
 
+    private String userId;
+
     private List<QuoteDTO> quotes;
 
     private List<PostDTO> posts;
