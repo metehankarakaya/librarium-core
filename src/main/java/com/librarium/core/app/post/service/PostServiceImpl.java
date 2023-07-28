@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -67,6 +68,7 @@ public class PostServiceImpl implements PostService {
         User user = getCurrentUser();
 
         Post post = postDTOToPostMapper.map(postDTO);
+        post.setTempId(UUID.randomUUID());
         post.setUser(user);
         if (postDTO.getContent() != null) {
             post.setContent(postDTO.getContent());
