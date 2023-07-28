@@ -47,6 +47,7 @@ public class PostServiceImpl implements PostService {
         User user = getCurrentUser();
 
         Post post = postDTOToPostMapper.map(postDTO);
+        post.setTempId(null);
         post.setUser(user);
         if (postDTO.getContent() != null) {
             post.setContent(postDTO.getContent());
