@@ -5,8 +5,11 @@ import com.librarium.core.app.draft.service.DraftService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,6 +21,11 @@ public class DraftResource {
     @GetMapping("/find/my/draft")
     public ResponseEntity<DraftDTO> findMyDraft() {
         return ResponseEntity.ok(draftService.findMyDraft());
+    }
+
+    @GetMapping("/delete/post/in/draft/{tempId}")
+    public ResponseEntity<Boolean> deletePostInDraft(@PathVariable UUID tempId) {
+        return ResponseEntity.ok(draftService.deletePostInDraft(tempId));
     }
 
 }
