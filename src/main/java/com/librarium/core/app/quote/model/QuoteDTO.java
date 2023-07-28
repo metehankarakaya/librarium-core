@@ -5,11 +5,14 @@ import com.librarium.core.app.user.model.UserDTO;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 public class QuoteDTO {
 
     private String id;
+
+    private UUID tempId;
 
     private String content;
 

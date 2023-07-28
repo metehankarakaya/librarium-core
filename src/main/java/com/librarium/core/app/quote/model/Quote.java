@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Document
@@ -15,6 +16,9 @@ public class Quote {
 
     @Id
     private String id;
+
+    @Field
+    private UUID tempId;
 
     @Field
     private String content;
