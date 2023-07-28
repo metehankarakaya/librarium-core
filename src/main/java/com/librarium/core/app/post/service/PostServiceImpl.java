@@ -79,7 +79,7 @@ public class PostServiceImpl implements PostService {
         post.setCreatedDate(getNow());
 
         Draft founDraft = draftRepository.findByUserId(user.getId());
-        if (founDraft.getPosts().size() + founDraft.getQuotes().size() > 0) {
+        if (founDraft.getPosts().size() + founDraft.getQuotes().size() >= 0) {
             if (founDraft.getPosts().size() + founDraft.getQuotes().size() < 50) {
                 founDraft.getPosts().add(post);
                 draftRepository.save(founDraft);
