@@ -13,6 +13,10 @@ public interface DraftService extends BaseService {
 
     Boolean deletePostInDraft(UUID tempId);
 
+    Boolean deleteQuoteInDraft(UUID tempId);
+
     Boolean sharePostInDraft(UUID tempId);
+
+    Boolean shareQuoteInDraft(UUID tempId);
 
 }

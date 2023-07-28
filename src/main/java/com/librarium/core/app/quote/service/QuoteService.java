@@ -19,4 +19,6 @@ public interface QuoteService extends BaseService {
 
     List<QuoteDTO> findQuotesByUserId(String userId);
 
+    Boolean addQuoteToDraft(QuoteDTO quoteDTO);
+
 }

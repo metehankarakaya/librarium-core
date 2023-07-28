@@ -43,4 +43,9 @@ public class QuoteResource {
         return ResponseEntity.ok(quoteService.findQuotesByUserId(userId));
     }
 
+    @PostMapping("/add/quote/to/draft")
+    public ResponseEntity<Boolean> addQuoteToDraft(@RequestBody QuoteDTO quoteDTO) {
+        return ResponseEntity.ok(quoteService.addQuoteToDraft(quoteDTO));
+    }
+
 }

@@ -9,6 +9,9 @@ import com.librarium.core.app.post.model.Post;
 import com.librarium.core.app.post.model.PostToPostDTOMapper;
 import com.librarium.core.app.post.repository.PostRepository;
 import com.librarium.core.app.post.service.PostServiceImpl;
+import com.librarium.core.app.quote.model.Quote;
+import com.librarium.core.app.quote.model.QuoteToQuoteDTOMapper;
+import com.librarium.core.app.quote.service.QuoteServiceImpl;
 import com.librarium.core.app.user.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,7 +28,11 @@ public class DraftServiceImpl implements DraftService {
 
     private final PostServiceImpl postService;
 
+    private final QuoteServiceImpl quoteService;
+
     private final PostToPostDTOMapper postToPostDTOMapper;
+
+    private final QuoteToQuoteDTOMapper quoteToQuoteDTOMapper;
 
     private final DraftToDraftDTOMapper draftToDraftDTOMapper;
 
@@ -77,6 +84,40 @@ public class DraftServiceImpl implements DraftService {
                 draftPosts.removeIf(draftPost -> draftPost.getTempId().equals(tempId));
                 draftRepository.save(draft);
                 postService.addPost(postToPostDTOMapper.map(tempPost));
+
+                return Boolean.TRUE;
+            }
+        }
+
+        return Boolean.FALSE;
+    }
+
+    @Override
+    public Boolean deleteQuoteInDraft(UUID tempId) {
+        User user = getCurrentUser();
+        Draft draft = draftRepository.findByUserId(user.getId());
+
+        List<Quote> draftQuotes = draft.getQuotes();
+
+        draftQuotes.removeIf(draftPost -> draftPost.getTempId().equals(tempId));
+        draftRepository.save(draft);
+
+        return Boolean.TRUE;
+    }
+
+    @Override
+    public Boolean shareQuoteInDraft(UUID tempId) {
+        User user = getCurrentUser();
+        Draft draft = draftRepository.findByUserId(user.getId());
+
+        List<Quote> draftQuotes = draft.getQuotes();
+
+        for (Quote quote : draftQuotes) {
+            if (quote.getTempId().equals(tempId)) {
+                Quote tempQuote = quote;
+                draftQuotes.removeIf(draftPost -> draftPost.getTempId().equals(tempId));
+                draftRepository.save(draft);
+                quoteService.addQuote(quoteToQuoteDTOMapper.map(tempQuote));
 
                 return Boolean.TRUE;
             }

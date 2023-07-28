@@ -3,6 +3,8 @@ package com.librarium.core.app.quote.service;
 import com.librarium.core.app.book.model.BookDTOToBookMapper;
 import com.librarium.core.app.book.model.BookToBookDTOMapper;
 import com.librarium.core.app.common.service.BaseServiceImpl;
+import com.librarium.core.app.draft.model.Draft;
+import com.librarium.core.app.draft.repository.DraftRepository;
 import com.librarium.core.app.quote.model.Quote;
 import com.librarium.core.app.quote.model.QuoteDTO;
 import com.librarium.core.app.quote.model.QuoteDTOToQuoteMapper;
@@ -18,10 +20,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,6 +42,8 @@ public class QuoteServiceImpl implements QuoteService {
     private final UserRepository userRepository;
 
     private final QuoteRepository quoteRepository;
+
+    private final DraftRepository draftRepository;
 
     @Override
     public User getCurrentUser() {
@@ -120,5 +121,30 @@ public class QuoteServiceImpl implements QuoteService {
         }
         Collections.reverse(quoteDTOS);
         return quoteDTOS;
+    }
+
+    @Override
+    public Boolean addQuoteToDraft(QuoteDTO quoteDTO) {
+        User user = getCurrentUser();
+
+        Quote quote = quoteDTOToQuoteMapper.map(quoteDTO);
+        quote.setTempId(UUID.randomUUID());
+        quote.setUser(user);
+        quote.setBook(bookDTOToBookMapper.map(quoteDTO.getBook()));
+        quote.setPageNumber(quoteDTO.getPageNumber());
+        quote.setCreatedDate(getNow());
+        quote.setLikeCount(0);
+        quote.setDislikeCount(0);
+
+        Draft foundDraft = draftRepository.findByUserId(user.getId());
+        if (foundDraft.getPosts().size() + foundDraft.getQuotes().size() >= 0) {
+            if (foundDraft.getPosts().size() + foundDraft.getQuotes().size() < 50) {
+                foundDraft.getQuotes().add(quote);
+                draftRepository.save(foundDraft);
+
+                return Boolean.TRUE;
+            }
+        }
+        return Boolean.FALSE;
     }
 }

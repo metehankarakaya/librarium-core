@@ -33,4 +33,14 @@ public class DraftResource {
         return ResponseEntity.ok(draftService.sharePostInDraft(tempId));
     }
 
+    @GetMapping("/delete/quote/in/draft/{tempId}")
+    public ResponseEntity<Boolean> deleteQuoteInDraft(@PathVariable UUID tempId) {
+        return ResponseEntity.ok(draftService.deleteQuoteInDraft(tempId));
+    }
+
+    @GetMapping("/share/quote/in/draft/{tempId}")
+    public ResponseEntity<Boolean> shareQuoteInDraft(@PathVariable UUID tempId) {
+        return ResponseEntity.ok(draftService.shareQuoteInDraft(tempId));
+    }
+
 }
