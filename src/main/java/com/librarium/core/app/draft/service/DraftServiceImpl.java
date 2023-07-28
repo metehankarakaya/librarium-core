@@ -6,7 +6,9 @@ import com.librarium.core.app.draft.model.DraftDTO;
 import com.librarium.core.app.draft.model.DraftToDraftDTOMapper;
 import com.librarium.core.app.draft.repository.DraftRepository;
 import com.librarium.core.app.post.model.Post;
+import com.librarium.core.app.post.model.PostToPostDTOMapper;
 import com.librarium.core.app.post.repository.PostRepository;
+import com.librarium.core.app.post.service.PostServiceImpl;
 import com.librarium.core.app.user.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,10 @@ import java.util.UUID;
 public class DraftServiceImpl implements DraftService {
 
     private final BaseServiceImpl baseService;
+
+    private final PostServiceImpl postService;
+
+    private final PostToPostDTOMapper postToPostDTOMapper;
 
     private final DraftToDraftDTOMapper draftToDraftDTOMapper;
 
@@ -56,5 +62,26 @@ public class DraftServiceImpl implements DraftService {
         draftRepository.save(draft);
 
         return Boolean.TRUE;
+    }
+
+    @Override
+    public Boolean sharePostInDraft(UUID tempId) {
+        User user = getCurrentUser();
+        Draft draft = draftRepository.findByUserId(user.getId());
+
+        List<Post> draftPosts = draft.getPosts();
+
+        for (Post post : draftPosts) {
+            if (post.getTempId().equals(tempId)) {
+                Post tempPost = post;
+                draftPosts.removeIf(draftPost -> draftPost.getTempId().equals(tempId));
+                draftRepository.save(draft);
+                postService.addPost(postToPostDTOMapper.map(tempPost));
+
+                return Boolean.TRUE;
+            }
+        }
+
+        return Boolean.FALSE;
     }
 }

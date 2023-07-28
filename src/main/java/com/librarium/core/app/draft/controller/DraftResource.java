@@ -28,4 +28,9 @@ public class DraftResource {
         return ResponseEntity.ok(draftService.deletePostInDraft(tempId));
     }
 
+    @GetMapping("/share/post/in/draft/{tempId}")
+    public ResponseEntity<Boolean> sharePostInDraft(@PathVariable UUID tempId) {
+        return ResponseEntity.ok(draftService.sharePostInDraft(tempId));
+    }
+
 }
